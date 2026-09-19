@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Care Bridge - Login & Sign Up</title>
+    <style>
+        :root {
+            --bg: #ffffff;
+            --fg: #000000;
+            --muted: #f4f4f4;
+            --border: #000000;
+            --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: var(--font);
+        }
+        body {
+            background-color: var(--bg);
+            color: var(--fg);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        header {
+            padding: 2rem 1rem 1rem 1rem;
+            text-align: center;
+            border-bottom: 2px solid var(--border);
+        }
+        .brand {
+            font-size: 1.75rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .tagline {
+            font-size: 0.85rem;
+            color: #555555;
+            margin-top: 0.25rem;
+        }
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+        .container {
+            width: 100%;
+            max-width: 440px;
+            border: 2px solid var(--border);
+            padding: 2.5rem;
+            box-shadow: 6px 6px 0px var(--fg);
+            background: #ffffff;
+        }
+        .auth-switch {
+            display: flex;
+            border: 2px solid var(--border);
+            margin-bottom: 2rem;
+        }
+        .auth-switch button {
+            flex: 1;
+            padding: 0.75rem;
+            background: transparent;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.8rem;
+        }
+        .auth-switch button.active {
+            background: var(--fg);
+            color: var(--bg);
+        }
+        .role-switch {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .role-switch label {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            border: 1px solid var(--border);
+            padding: 0.6rem;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .role-switch input[type="radio"] {
+            accent-color: var(--fg);
+        }
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 0.4rem;
+            letter-spacing: 0.5px;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border);
+            background: var(--bg);
+            color: var(--fg);
+            font-size: 0.9rem;
+            outline: none;
+        }
+        .form-group input:focus, .form-group select:focus {
+            background-color: var(--muted);
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 0.85rem;
+            background: var(--fg);
+            color: var(--bg);
+            border: 2px solid var(--border);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            margin-top: 0.5rem;
+        }
+        .submit-btn:hover {
+            background: var(--bg);
+            color: var(--fg);
+        }
+        .hidden {
+            display: none;
+        }
+        footer {
+            padding: 1.5rem;
+            text-align: center;
+            border-top: 2px solid var(--border);
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="brand">Care Bridge</div>
+        <div class="tagline">Authentication Gateway</div>
+    </header>
+    <main>
+        <div class="container">
+            <div class="auth-switch">
+                <button id="tab-login" class="active" onclick="switchAuth('login')">Login</button>
+                <button id="tab-signup" onclick="switchAuth('signup')">Sign Up</button>
+            </div>
+            <form id="form-login" onsubmit="event.preventDefault(); alert('Login submitted');">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" placeholder="user@carebridge.org" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="submit-btn">Login</button>
+            </form>
+            <form id="form-signup" class="hidden" onsubmit="event.preventDefault(); alert('Sign Up submitted');">
+                <div class="role-switch">
+                    <label>
+                        <input type="radio" name="role" value="donor" checked onclick="toggleRole('donor')"> Donor
+                    </label>
+                    <label>
+                        <input type="radio" name="role" value="org" onclick="toggleRole('org')"> Organization
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label id="label-name">Full Name</label>
+                    <input type="text" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" placeholder="user@carebridge.org" required>
+                </div>
+                <div id="org-fields" class="hidden">
+                    <div class="form-group">
+                        <label>Organization Type</label>
+                        <select>
+                            <option>Non-Profit / NGO</option>
+                            <option>Charity</option>
+                            <option>Educational Foundation</option>
+                            <option>Medical Services</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Tax Identification Number</label>
+                        <input type="text" placeholder="XX-XXXXXXX">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="submit-btn">Create Account</button>
+            </form>
+        </div>
+    </main>
+    <footer> Care Bridge &copy; Designed & Developed by Yousef </footer>
+    <script>
+        function switchAuth(mode) {
+            const loginBtn = document.getElementById('tab-login');
+            const signupBtn = document.getElementById('tab-signup');
+            const loginForm = document.getElementById('form-login');
+            const signupForm = document.getElementById('form-signup');
+            if (mode === 'login') {
+                loginBtn.classList.add('active');
+                signupBtn.classList.remove('active');
+                loginForm.classList.remove('hidden');
+                signupForm.classList.add('hidden');
+            } else {
+                signupBtn.classList.add('active');
+                loginBtn.classList.remove('active');
+                signupForm.classList.remove('hidden');
+                loginForm.classList.add('hidden');
+            }
+        }
+        function toggleRole(role) {
+            const orgFields = document.getElementById('org-fields');
+            const labelName = document.getElementById('label-name');
+            if (role === 'org') {
+                orgFields.classList.remove('hidden');
+                labelName.textContent = 'Organization Name';
+            } else {
+                orgFields.classList.add('hidden');
+                labelName.textContent = 'Full Name';
+            }
+        }
+    </script>
+</body>
+</html>
